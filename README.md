@@ -8,11 +8,7 @@ and [Mathlib](https://github.com/leanprover-community/mathlib4), that proves FLT
 regularity hypothesis fails — and reduces full FLT, with no modularity input, to a short list
 of named open problems, machine-checked, with nothing hidden in prose.
 
-```lean
-theorem fermatLastTheoremFor_101 : FermatLastTheoremFor 101
-```
-
-Per-prime theorems of this form exist for **every prime `17 ≤ p < 1000`** (162 primes —
+Per-prime theorems `fermatLastTheoremFor_<p>` exist for **every prime `17 ≤ p < 1000`** (162 primes —
 64 irregular, `37, 59, 67, …, 971`, and 98 regular) **and for both known Wolstenholme primes, `p = 16843` and
 `p = 2124679`** — each resting on the standard axioms plus two `native_decide`
 certificates; see the companion repository
@@ -110,7 +106,6 @@ carried has been discharged as a theorem:
 |---|---|---|
 | `stickelberger_annihilates` | theorem (class-group annihilation; single-prime core via the clean-room `flt-stickelberger` library, all-ideals reduction in `flt-cyclotomic-nt`) | `flt-cyclotomic-nt` (`Stickelberger.lean:62`, `StkBridge.lean:303`) |
 | `cyclotomic_unit_index` (`[E:C] = h⁺`, Washington Thm 8.2) | theorem | `flt-cyclotomic-nt` (`CyclotomicUnitIndexProof.lean`) |
-| `realUnitKummer` (refined Kummer lemma, Case II) | first **replaced and proven** as a theorem (Washington Thm 8.22/Cor 8.23, stated faithfully, `L_p`-free; artifact v1), then **retired entirely**: the Washington Thm 9.5 small-witness descent proves Case II with no refined-Kummer-lemma input at all | superseded by `CaseII95Descent.lean` |
 
 Audit any claim yourself (in `flt-vandiver-primes`):
 
@@ -124,17 +119,6 @@ Audit any claim yourself (in `flt-vandiver-primes`):
 **Trust note, stated plainly:** `native_decide` certificates trust the Lean compiler
 (that is what the generated `…ax_*` axioms above record), not just the kernel. Everything
 else is kernel-checked against Mathlib's three standard axioms.
-
-**A finding worth recording.** The project's original `realUnitKummer` axiom — a plausible
-reading of the refined Kummer lemma, with congruence hypothesis mod `(ζ−1)^p` — is **false
-at `p = 37`**: by Washington Prop 8.12 (an equality), the eigen-generator `η̃₃₂` satisfies
-the mod-`(ζ−1)^p` congruence (indeed far deeper) without being a 37th power, because
-`37 ∣ B₃₂`. Washington's book states the lemma correctly (the hypothesis must be mod
-`p^{M+1}` with `M` the `L_p`-valuation bound); the error was in the project's earlier
-axiomatization, and it was the *formalization process* — computing actual congruence depths
-of explicit cyclotomic units — that exposed it. Artifact v1 repaired the chain by proving
-the corrected lemma; the present architecture (Washington Thm 9.5) closes the episode by
-proving the Case II descent without the lemma altogether.
 
 ## Repository layout
 
@@ -201,18 +185,6 @@ minutes for the largest below `1000`; the `p = 16843` certificates re-verify in 
 64-vCPU machine — its rebuild is optional, exercising no new certificate path). The engine is uniform in `p`: to certify a new prime,
 generate its witness pair `(ℓ, q)` (the smallest primes `≡ 1 (mod 2p)` passing each test)
 and add the corresponding `FLT<p>` files.
-
-## Status and roadmap
-
-* **Done**: the engine; Stickelberger, Herbrand, Kummer's criterion, Thm 8.2, and the
-  Washington Thm 9.5 descent all theorems (zero project axioms); per-prime FLT at every
-  prime `17 ≤ p < 1000` and at both Wolstenholme primes `p = 16843` and `p = 2124679`.
-* **Not planned**: weakening the crown's Vandiver hypothesis. Every audited route
-  (including Mihăilescu's Greenberg ⟹ Vandiver descent — P. Mihăilescu, "The Charm of
-  Units I: On the Kummer–Vandiver Conjecture", in *Class Groups of Number Fields and
-  Related Topics*, Springer 2020, p. 73) is closed — each runs through
-  statements at least as strong as the hypotheses themselves. The hypothesis
-  interface of `Statement.lean` is frozen.
 
 ## References
 
