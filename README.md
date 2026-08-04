@@ -99,13 +99,7 @@ Most now live in the **`flt-cyclotomic-nt`** dependency rather than this repo:
 
 ## Axiom status: no custom axioms
 
-The project carries **no axioms of its own**. Every named mathematical axiom it ever
-carried has been discharged as a theorem:
-
-| Former axiom | Now | Where |
-|---|---|---|
-| `stickelberger_annihilates` | theorem (class-group annihilation; single-prime core via the clean-room `flt-stickelberger` library, all-ideals reduction in `flt-cyclotomic-nt`) | `flt-cyclotomic-nt` (`Stickelberger.lean:62`, `StkBridge.lean:303`) |
-| `cyclotomic_unit_index` (`[E:C] = h⁺`, Washington Thm 8.2) | theorem | `flt-cyclotomic-nt` (`CyclotomicUnitIndexProof.lean`) |
+The project carries **no axioms of its own**; every mathematical input is a proven theorem.
 
 Audit any claim yourself (in `flt-vandiver-primes`):
 
