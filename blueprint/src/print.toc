@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {0.1}The $Q_i$ certificate and the Vandiver bridge}{1}{section.0.1}%
+\contentsline {section}{\numberline {0.2}Case II: the Washington 9.5 small-witness descent}{1}{section.0.2}%
+\contentsline {section}{\numberline {0.3}Case I}{2}{section.0.3}%
+\contentsline {section}{\numberline {0.4}The crown theorems}{2}{section.0.4}%

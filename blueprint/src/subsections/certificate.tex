@@ -1,0 +1,42 @@
+\section{The $Q_i$ certificate and the Vandiver bridge}\label{sec:certificate}
+
+\begin{definition}[$Q_i$ / Vandiver certificate]\label{def:vcert}
+  \lean{FltVandiver.QiCert.vandiverCert}
+  \leanok
+  The Boolean certificate \code{vandiverCert}~$p\,\ell\,t$ asserting that the
+  $Q_i$ cyclotomic-unit test fires at every even index for the auxiliary pair
+  $(\ell, t)$.
+\end{definition}
+
+\begin{definition}[Fast sliced certificate]\label{def:vcertfast}
+  \lean{FltVandiver.QiCert.vandiverCertFast}
+  \leanok
+  \uses{def:vcert}
+  A pure-\code{Nat} reformulation \code{vandiverCertFast} of the certificate, split
+  into slices, that \code{native\_decide} can evaluate even at $p = 2124679$.
+\end{definition}
+
+\begin{definition}[Unit index {$[E:C]=\hplus$} (external)]\label{ext:unitindex}
+  \leanok
+  Washington's Theorem~8.2, \code{cyclotomic\_unit\_index} in
+  \code{flt-cyclotomic-nt}: the index of the cyclotomic units equals $\hplus$. It
+  turns the $Q_i$ test into a statement about $p \nmid \hplus$.
+\end{definition}
+
+\begin{theorem}[$Q_i$ certificate $\Rightarrow$ Vandiver]\label{thm:vbridge}
+  \lean{FltVandiver.QiCert.qiVandiverBridge_all}
+  \leanok
+  \uses{def:vcert, ext:unitindex}
+  If \code{vandiverCert}~$p\,\ell\,t$ holds then $p \nmid \hplus$: the $Q_i$ test
+  firing at every even index rules out each eigen cyclotomic unit being a $p$-th
+  power.
+\end{theorem}
+
+\begin{definition}[Small-witness certificate]\label{def:swcert}
+  \lean{FltVandiver.SmallWitnessCert}
+  \leanok
+  \uses{def:vcert}
+  \code{SmallWitnessCert}~$p$ packages the pair $(\ell, t)$ with $\ell < p^2-p$ and
+  the $Q_i$ certificate --- the single finite input that powers both the Vandiver
+  conclusion and the Case~II descent.
+\end{definition}

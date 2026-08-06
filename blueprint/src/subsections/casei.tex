@@ -1,0 +1,30 @@
+\section{Case I}\label{sec:casei}
+
+\begin{definition}[Case I hypothesis]\label{def:caseIholds}
+  \lean{FltVandiver.CaseIHolds}
+  \leanok
+  \code{CaseIHolds}~$p$: no Case~I solution ($p \nmid xyz$) exists. It is a
+  hypothesis of the modular engine, discharged below by a certificate.
+\end{definition}
+
+\begin{theorem}[$B_{p-5}$ route to Case I]\label{thm:caseIb5}
+  \lean{CyclotomicNT.caseI_of_not_irregular_5}
+  \leanok
+  If $p \nmid B_{p-5}$ then Case~I holds --- Kummer's 1857 refinement, used at the
+  Wolstenholme primes where $p \mid B_{p-3}$ silences the primary criterion.
+\end{theorem}
+
+\begin{definition}[Sophie Germain certificate]\label{def:sgcert}
+  \lean{FltVandiver.sgCert}
+  \leanok
+  \code{sgCert}~$p\,q$: the Boolean certificate that an auxiliary prime $q$ meets
+  Sophie Germain's conditions for $p$.
+\end{definition}
+
+\begin{theorem}[Germain route to Case I]\label{thm:caseIsg}
+  \lean{FltVandiver.caseI_of_sgCert}
+  \leanok
+  \uses{def:sgcert}
+  If \code{sgCert}~$p\,q$ holds for some auxiliary prime $q$, then Case~I holds ---
+  the certified route at the two Wolstenholme primes.
+\end{theorem}

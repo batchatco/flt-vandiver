@@ -1,0 +1,23 @@
+% Top-level content for the flt-vandiver blueprint.
+\blueprintfrontmatter
+
+\begin{abstract}
+This blueprint maps \code{flt-vandiver}, the engine of the development: it reduces
+\code{FermatLastTheoremFor}~$p$ to two finite certificates, discharging Case~II by
+a machine-checked instance of Washington's Theorem~9.5 small-witness descent and
+Case~I by a Bernoulli or Sophie Germain criterion. Regularity is never used; the
+weaker input $p \nmid \hplus$ is supplied by a $Q_i$ cyclotomic-unit certificate.
+
+Two inputs are consumed from sibling libraries and appear here as external leaves:
+the cyclotomic-unit index $[E:C] = \hplus$ (from \code{flt-cyclotomic-nt}) and
+Hilbert's Theorem~94 with Kummer-extension unramifiedness (from \code{flt-regular}).
+
+Nodes are linked by \code{\textbackslash lean} to their declarations (namespaces
+\code{FltVandiver}, \code{FltVandiver.Descent95}); this is a milestone-level map of
+the engine, centered on the Case~II descent.
+\end{abstract}
+
+\input{subsections/certificate}
+\input{subsections/descent}
+\input{subsections/casei}
+\input{subsections/crown}

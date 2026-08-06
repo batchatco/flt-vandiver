@@ -1,0 +1,28 @@
+\section{The crown theorems}\label{sec:crown}
+
+\begin{theorem}[Engine, modular form]\label{thm:fltvandiver}
+  \lean{FltVandiver.flt_vandiver}
+  \leanok
+  \uses{def:swcert, def:caseIholds, thm:nosituation}
+  If \code{SmallWitnessCert}~$p$ holds and Case~I holds at $p$, then
+  \code{FermatLastTheoremFor}~$p$: Case~II is closed by the descent, Case~I taken
+  as hypothesis.
+\end{theorem}
+
+\begin{theorem}[Engine, discharged form]\label{thm:certs95}
+  \lean{FltVandiver.Descent95.fermatLastTheoremFor_of_certs_95}
+  \leanok
+  \uses{thm:nosituation, def:swcert, thm:caseIb5}
+  Given the $Q_i$ certificate, the size bound $\ell < p^2-p$, and the irregularity
+  certificate with $p-3 \notin L$, \code{FermatLastTheoremFor}~$p$ holds with nothing
+  about Case~I assumed --- the non-Wolstenholme headline.
+\end{theorem}
+
+\begin{theorem}[Reduction to two open problems]\label{thm:crown}
+  \lean{FltVandiver.fermatLastTheorem_of_vandiver_sgAux}
+  \leanok
+  \uses{thm:fltvandiver, thm:caseIsg}
+  If every prime has a small-witness certificate and every odd prime has a Sophie
+  Germain auxiliary, then Fermat's Last Theorem holds --- with no modularity input.
+  This is the paper's headline reduction; both hypotheses are classically open.
+\end{theorem}

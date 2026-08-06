@@ -1,0 +1,55 @@
+\section{Case II: the Washington 9.5 small-witness descent}\label{sec:descent}
+
+\begin{definition}[Hilbert 94 / Kummer unramifiedness (external)]\label{ext:hilbert94}
+  \leanok
+  Hilbert's Theorem~94 and the unramifiedness of the relevant Kummer extension,
+  consumed from \code{flt-regular}. These seed the $\ell \mid \xi$ invariant that
+  the descent tracks.
+\end{definition}
+
+\begin{theorem}[Kummer extension unramified]\label{thm:kummerunram}
+  \lean{kummer_isUnramified}
+  \leanok
+  \uses{ext:hilbert94}
+  The Kummer extension attached to a putative Case~II solution is unramified away
+  from $\ell$, the input the descent invokes a second time to seed its invariant.
+\end{theorem}
+
+\begin{theorem}[Situation from a rational solution]\label{thm:situation}
+  \lean{FltVandiver.Descent95.situation95_of_rational}
+  \leanok
+  \uses{def:swcert, thm:vbridge}
+  A putative Case~II solution, normalized to the real cyclotomic field, produces a
+  ``situation'' of Washington~9.5 equipped with a measure $m \ge p(p-1)/2$.
+\end{theorem}
+
+\begin{theorem}[Principality from Vandiver (Washington 9.6)]\label{thm:principal96}
+  \lean{FltVandiver.Descent95.pair_real_principal_96}
+  \leanok
+  \uses{thm:vbridge}
+  Under $p \nmid \hplus$ alone, the ideal factors of the situation are principal ---
+  the step that classically needed full regularity, here powered by the certificate.
+\end{theorem}
+
+\begin{theorem}[One descent step]\label{thm:descentstep}
+  \lean{FltVandiver.Descent95.descent_step_95}
+  \leanok
+  \uses{thm:situation, thm:principal96, thm:kummerunram}
+  From a situation the descent produces a new situation at a smaller parameter,
+  via the mod-$\ell$ cancellations of Washington's Lemmas~9.6--9.7.
+\end{theorem}
+
+\begin{theorem}[The step decreases the measure]\label{thm:measdecrease}
+  \lean{FltVandiver.Descent95.descent_step_meas_95}
+  \leanok
+  \uses{thm:descentstep}
+  The descended situation has strictly smaller measure --- the well-foundedness
+  that makes the descent terminate.
+\end{theorem}
+
+\begin{theorem}[No minimal situation]\label{thm:nosituation}
+  \lean{FltVandiver.Descent95.no_situation_95}
+  \leanok
+  \uses{thm:measdecrease, thm:principal96}
+  No situation of minimal measure can exist; hence Case~II admits no solution.
+\end{theorem}
