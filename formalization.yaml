@@ -118,4 +118,4 @@ review:
 # alignment - how source statements map to formal declarations.
 alignment:
   paper: "Lean 4 Formalization of Fermat's Last Theorem for Every Prime Exponent Below 1000, Regular and Irregular, and Two Wolstenholme Primes (2026)"
-  blueprint: ""                   # planned
+  blueprint: "https://github.com/batchatco/flt-vandiver/tree/afm-v1/blueprint"   # per-repo blueprints; rendered site published via CI at go-public
