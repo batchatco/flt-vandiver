@@ -186,6 +186,10 @@ and add the corresponding `FLT<p>` files.
   (Ch. 5–6, 8, 9: Stickelberger, cyclotomic units, the second case of FLT).
 * `leanprover-community/flt-regular`. <https://github.com/leanprover-community/flt-regular>
 
+## Blueprint & metadata
+
+A dependency-graph blueprint of this library is under [`blueprint/`](blueprint/) (rendered web + PDF published to GitHub Pages once the family is public). Family-level metadata for all six libraries is in [`formalization.yaml`](formalization.yaml) in this repo's root.
+
 ---
 
 Apache License 2.0 — see [LICENSE](LICENSE).

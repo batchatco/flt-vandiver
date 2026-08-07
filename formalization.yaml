@@ -1,5 +1,6 @@
 # formalization.yaml (v0.2): repo-root metadata for formalization projects.
-# One family-level descriptor, placed identically in the root of all six libraries.
+# One family-level descriptor for all six libraries, kept in the flt-vandiver root;
+# the other five repos' READMEs point here (single source of truth, easier to update).
 # [required] fields should be filled; everything else is optional.
 
 version: "v0.2"
