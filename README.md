@@ -1,6 +1,6 @@
 # flt-vandiver
 
-**Machine-checked Fermat's Last Theorem at irregular exponents — no modularity, no Wiles.**
+**Machine-checked Fermat's Last Theorem for every prime exponent `17 ≤ p < 1000` (regular and irregular) — no modularity, no Wiles.**
 
 A Lean 4 project, built on [flt-regular](https://github.com/leanprover-community/flt-regular)
 and [Mathlib](https://github.com/leanprover-community/mathlib4), that proves FLT by classical
@@ -12,19 +12,22 @@ Per-prime theorems `fermatLastTheoremFor_<p>` exist for **every prime `17 ≤ p 
 64 irregular, `37, 59, 67, …, 971`, and 98 regular) **and for both known Wolstenholme primes, `p = 16843` and
 `p = 2124679`** — each resting on the standard axioms plus two `native_decide`
 certificates; see the companion repository
-[`flt-vandiver-primes`](#repository-layout). At the irregular exponents these are, to our
-knowledge, the first machine-checked proofs of FLT. Kummer first proved FLT-37 by hand in
-1857; the formalized route here is the modern form of that argument (Vandiver-style Case II
-descent + Legendre/Kummer Case I), driven per-prime by short certificates. Combined with
+[`flt-vandiver-primes`](#repository-layout). The distinctive feature is uniformity: one Vandiver
+small-witness certificate discharges each exponent, so a single engine reaches the whole range. The
+irregular primes `59` and `67` and every prime above `100` are reached here for the first time; the
+smallest irregular prime, `37` (Kummer's 1857 case, first proved by hand that year), was
+machine-checked earlier by [Birkbeck's AINTLIB](https://github.com/CBirkbeck/AINTLIB) via a bespoke
+Eichler development. The formalized route here is the modern form of Kummer's argument (Vandiver-style
+Case II descent + Legendre/Kummer Case I), driven per-prime by short certificates. Combined with
 Mathlib's exponents 3 and 4 and `flt-regular`'s instances `5 ≤ p ≤ 13`, FLT for every
 exponent `2 < n < 1000` follows by routine per-exponent assembly.
 
-At `p = 37` the proof is search-free for Case I: Kummer's 1857 criterion
+At `p = 59` the proof is search-free for Case I: Kummer's 1857 criterion
 (`p ∤ B_{p−3} ⟹ Case I`) runs off the Bernoulli certificate, and Case II runs off the
-same auxiliary pair `(ℓ, t) = (149, 2)` that proves Vandiver:
+same auxiliary pair `(ℓ, t) = (709, 2)` that proves Vandiver:
 
 ```lean
-theorem fermatLastTheoremFor_37 : FermatLastTheoremFor 37   -- FltPrimes/FLT37.lean
+theorem fermatLastTheoremFor_59 : FermatLastTheoremFor 59   -- FltPrimes/FLT59.lean
 ```
 
 ## The crown theorems: FLT without Wiles, as named open problems
@@ -121,7 +124,7 @@ The development is split across small repositories so the core library builds fa
 | Repository | Content |
 |---|---|
 | **flt-vandiver** (this repo) | the engine: descent, certificates' soundness bridges, crown theorems |
-| **flt-vandiver-primes** | `fermatLastTheoremFor_<p>` + the two `native_decide` certificates, for every prime `17 ≤ p < 1000` and for both Wolstenholme primes `p = 16843` and `p = 2124679` (the `p = 37` Case I, `FltPrimes/FLT37.lean`, is search-free via Kummer's Case-I criterion) |
+| **flt-vandiver-primes** | `fermatLastTheoremFor_<p>` + the two `native_decide` certificates, for every prime `17 ≤ p < 1000` and for both Wolstenholme primes `p = 16843` and `p = 2124679` (the `p = 59` Case I, `FltPrimes/FLT59.lean`, is search-free via Kummer's Case-I criterion) |
 | **flt-vandiver-primes-kernel** | kernel-only re-proofs of `fermatLastTheoremFor_<p>` for the **8 irregular primes `< 200`** (the regular primes in that range are kernel-checked in `flt-regular-extended`) — pure kernel `decide`, no `native_decide`, no compiler trust |
 | **flt-regular-extended** | `FermatLastTheoremFor q` for every regular prime `17 ≤ q < 350` (47 primes), via `flt-regular` plus a kernel-`decide` Bernoulli regularity check (`native_decide`-free) |
 | **flt-cyclotomic-nt** | analytic/algebraic NT foundations (Dedekind zeta factorization, generalized Bernoulli, L-values; sorry-free; builds on Mathlib, flt-stickelberger, flt-regular) |
