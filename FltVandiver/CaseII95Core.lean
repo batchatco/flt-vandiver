@@ -3,13 +3,12 @@ import CyclotomicNT.EigenReindex
 import CyclotomicNT.IndexReduction
 
 /-!
-# The Washington Theorem 9.5 route, core lemmas (UNCOMMITTED MODULE)
+# The Washington Theorem 9.5 route, core lemmas
 
 Lemma 9.8 (telescoping engine, per-hom and full-invariant forms), the
 `pDlog`/`vandermonde_kill` combinatorial layer, the CRT joint-kernel of the
 reduction homs, Galois equivariance of the certificates, and Lemma 9.9 with
-its swap-point interface `assumption_II_95`.  See `CASEII95_PLAN.md` for the
-ledger and design notes.
+its swap-point interface `assumption_II_95`.
 -/
 
 namespace FltVandiver.Descent95

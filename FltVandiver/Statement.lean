@@ -86,8 +86,8 @@ non-modular route:
   Lecture IV; per-prime certificates exist).
 
 Together with `fermatLastTheoremFour` and the reduction to prime exponents, this is the
-machine-checked statement of *FLT without Wiles*: the entire gap between Kummer-style methods
-and FLT is exhibited as these two hypotheses. -/
+machine-checked reduction of FLT along the pre-modular route: the entire gap between
+Kummer-style methods and FLT is exhibited as these two hypotheses. -/
 theorem fermatLastTheorem_of_vandiver_caseI
     (hswcert : ∀ (p : ℕ) [Fact p.Prime], 3 < p → SmallWitnessCert p)
     (hcaseI : ∀ (p : ℕ), p.Prime → p ≠ 2 → CaseIHolds p) :
@@ -144,27 +144,22 @@ theorem fermatLastTheorem_of_vandiver_sgAux
     obtain ⟨q, _, hq, hcert⟩ := haux p hp hne
     exact fun a b c h => caseI_of_sgCert (hp.odd_of_ne_two hne) hq hcert h
 
-/-- **Crown v3 (Germain-window variant): FLT from four displayed hypotheses.**
+/-- **Germain-window variant (valid but vacuous).**
 
-With the descent axioms proven, Fermat's Last Theorem reduces to four named
-statements, each a recognized open problem:
+`fermatLastTheorem_of_vandiver_caseI` composed with the per-prime pigeonhole
+`caseI_of_supply_of_cancellation`: Case I is derived, for every odd `p`, from three
+conditions on the window `𝒬_p(C·p²) = {q ≤ C·p² prime, q ≡ 1 (mod 2p), 3 ∤ (q−1)/2p}`
+for one constant `C`: the window is nonempty (`hα`); the number of ordered pairs of nonzero
+`p`-th power residues summing to `1`, totaled over the window, is at most half the window's
+size (`hβA`); and on at most a quarter of the window `p` is a `p`-th power (`hβB`).
 
-* `hswcert` — the **effective small-witness Vandiver certificate**, uniformly
-  in `p`: a certified auxiliary pair `(ℓ, t)` with `ℓ < p² − p`
-  (`p ∤ h⁺(ℚ(ζ_p))` in effective, per-prime-checkable form);
-* `hα` — **prime supply at the `p²`-threshold**: the window
-  `𝒬_p(C·p²) = {q ≤ C·p² prime, q ≡ 1 (mod 2p), 3 ∤ (q−1)/2p}` is nonempty —
-  the least-prime-in-AP barrier (one logarithm beyond GRH detection);
-* `hβA` — **aggregated Jacobi cancellation**: the total count of `H × H`-pairs
-  summing to `1` across the window is at most half the window size — square-root
-  cancellation in the order-`p` Jacobi-sum family on average over `q`;
-* `hβB` — **power-residue sparsity**: at most a quarter of the window has `p` a
-  `p`-th power mod `q` (the Wieferich-flavored condition (B), on average).
-
-Taking `M := |𝒬_p(C·p²)|`, the pigeonhole (`caseI_of_supply_of_cancellation`) turns
-(α) + (β-A) + (β-B) into Case I; the small-witness certificate is the proven Washington-9.5
-descent for Case II; `p = 3` is Mathlib's `fermatLastTheoremThree`. No modularity input
-anywhere. -/
+**No `C : ℕ` satisfies the three hypotheses**, so the implication is correct but has no
+instance: `C = 0` gives an empty window (`hα` fails); `C = 1, 2, 3` fail `hβA` at
+`p = 31, 23, 11` respectively (at `C = 1`, `p = 31` the window is `{311, 683}` and `683`
+alone contributes the pairs `(2, 682)`, `(682, 2)`, `(342, 342)`); `C ≥ 4` fails `hβA` at
+`p = 3` already. The theorem is kept because the per-prime pigeonhole it packages is correct
+and used; it is **not** a reduction of Case I to open problems. The reduction of FLT to two
+hypotheses is `fermatLastTheorem_of_vandiver_sgAux` above. -/
 theorem fermatLastTheorem_of_vandiver_window (C : ℕ)
     (hswcert : ∀ (p : ℕ) [Fact p.Prime], 3 < p → SmallWitnessCert p)
     (hα : ∀ p : ℕ, p.Prime → 2 < p → 0 < (sgWindow p (C * p ^ 2)).card)
