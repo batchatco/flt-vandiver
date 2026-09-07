@@ -345,27 +345,27 @@ Two performance traps (both `O(q)`) for certificate authors:
 `ZMod q`) — quantify over the list with `List.all`; and `native_decide` on
 `Nat.Prime q` uses the bounded-forall instance — use `norm_num` instead. -/
 
-/-- Subgroup-form Legendre certificate: `l` lists `n = (q−1)/p` distinct `n`-th roots of
+/-- Subgroup-form Legendre certificate: `sub` (a list, unrelated to the Vandiver witness prime `ℓ`) lists `n = (q−1)/p` distinct `n`-th roots of
 unity (hence *all* of them, hence exactly the nonzero `p`-th power residues); no three
 of them sum to `0` (condition (A)); and `p` is neither `0` nor in the list (condition
 (B)). Unlike `sgCert`, verification never enumerates `ZMod q` — the quantifier clauses
 are `List.all` folds precisely to dodge the `Fintype` decidable-forall instance. -/
-def sgCertSub (p q n : ℕ) [NeZero q] (l : List (ZMod q)) : Bool :=
+def sgCertSub (p q n : ℕ) [NeZero q] (sub : List (ZMod q)) : Bool :=
   decide (q - 1 = n * p) &&
-  decide (l.length = n) &&
-  decide l.Nodup &&
-  (l.all fun s => decide (s ^ n = 1)) &&
-  (l.all fun a => l.all fun b => decide (-(a + b) ∉ l)) &&
-  decide ((p : ZMod q) ∉ l) &&
+  decide (sub.length = n) &&
+  decide sub.Nodup &&
+  (sub.all fun s => decide (s ^ n = 1)) &&
+  (sub.all fun a => sub.all fun b => decide (-(a + b) ∉ sub)) &&
+  decide ((p : ZMod q) ∉ sub) &&
   decide ((p : ZMod q) ≠ 0)
 
-/-- **Bridge:** `sgCertSub p q n l = true` supplies Legendre's hypotheses `(A)` and `(B)`
+/-- **Bridge:** `sgCertSub p q n sub = true` supplies Legendre's hypotheses `(A)` and `(B)`
 in the form consumed by `caseI_of_auxiliaryPrime`. The only mathematics beyond
-`sgCert_imp`'s is the root-count argument: `l` is a set of `n` distinct roots of
+`sgCert_imp`'s is the root-count argument: `sub` is a set of `n` distinct roots of
 `Xⁿ − 1` over the field `ZMod q`, so it exhausts them, and every `xᵖ` with `x ≠ 0` is
 such a root since `(xᵖ)ⁿ = x^{q−1} = 1`. -/
-theorem sgCertSub_imp {p q n : ℕ} [NeZero q] [Fact q.Prime] {l : List (ZMod q)}
-    (h : sgCertSub p q n l = true) :
+theorem sgCertSub_imp {p q n : ℕ} [NeZero q] [Fact q.Prime] {sub : List (ZMod q)}
+    (h : sgCertSub p q n sub = true) :
     (∀ x y z : ZMod q, x ^ p + y ^ p + z ^ p = 0 → x = 0 ∨ y = 0 ∨ z = 0) ∧
     (∀ t : ZMod q, t ^ p ≠ (p : ZMod q)) := by
   simp only [sgCertSub, Bool.and_eq_true, List.all_eq_true, decide_eq_true_eq] at h
@@ -374,26 +374,26 @@ theorem sgCertSub_imp {p q n : ℕ} [NeZero q] [Fact q.Prime] {l : List (ZMod q)
   have hnp : 0 < n * p := by rw [← hqn]; omega
   have hn0 : n ≠ 0 := by rintro rfl; simp at hnp
   have hp0 : p ≠ 0 := by rintro rfl; simp at hnp
-  -- every `p`-th power of a nonzero element appears in `l`
-  have hmem : ∀ x : ZMod q, x ≠ 0 → x ^ p ∈ l := by
+  -- every `p`-th power of a nonzero element appears in `sub`
+  have hmem : ∀ x : ZMod q, x ≠ 0 → x ^ p ∈ sub := by
     intro x hx
     have h1 : (x ^ p) ^ n = 1 := by
       rw [← pow_mul, mul_comm, ← hqn]
       exact ZMod.pow_card_sub_one_eq_one hx
     have h2 : x ^ p ∈ Polynomial.nthRoots n (1 : ZMod q) :=
       (Polynomial.mem_nthRoots (Nat.pos_of_ne_zero hn0)).mpr h1
-    have hsub : l.toFinset ⊆ (Polynomial.nthRoots n (1 : ZMod q)).toFinset := by
+    have hsub : sub.toFinset ⊆ (Polynomial.nthRoots n (1 : ZMod q)).toFinset := by
       intro s hs
       rw [Multiset.mem_toFinset]
       exact (Polynomial.mem_nthRoots (Nat.pos_of_ne_zero hn0)).mpr
         (hroots s (List.mem_toFinset.mp hs))
-    have hcard : (Polynomial.nthRoots n (1 : ZMod q)).toFinset.card ≤ l.toFinset.card :=
+    have hcard : (Polynomial.nthRoots n (1 : ZMod q)).toFinset.card ≤ sub.toFinset.card :=
       calc (Polynomial.nthRoots n (1 : ZMod q)).toFinset.card
           ≤ Multiset.card (Polynomial.nthRoots n (1 : ZMod q)) :=
             Multiset.toFinset_card_le _
         _ ≤ n := Polynomial.card_nthRoots n (1 : ZMod q)
-        _ = l.toFinset.card := by rw [List.toFinset_card_of_nodup hnodup, hlen]
-    have hx' : x ^ p ∈ l.toFinset := by
+        _ = sub.toFinset.card := by rw [List.toFinset_card_of_nodup hnodup, hlen]
+    have hx' : x ^ p ∈ sub.toFinset := by
       rw [Finset.eq_of_subset_of_card_le hsub hcard]
       exact Multiset.mem_toFinset.mpr h2
     exact List.mem_toFinset.mp hx'
