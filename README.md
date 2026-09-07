@@ -59,9 +59,10 @@ honest species:
 
 Each hypothesis alone is a recognized open problem; the point of the formalization is that
 **the entire gap between Kummer-style methods and FLT is exhibited as these statements**.
-A variant `fermatLastTheorem_of_vandiver_window` (crown v3) further decomposes `haux` into
-a prime-supply window hypothesis plus two averaged cancellation statements, for four named
-hypotheses total; `fermatLastTheorem_of_vandiver_caseI` is the coarse form with Case I
+A variant `fermatLastTheorem_of_vandiver_window` (crown v3) replaces `haux` by three averaged
+statements about a window of candidate auxiliaries; its docstring calls those statements open
+problems, but no constant `C` satisfies them, so the theorem is valid and vacuous (see
+[Errata](#errata)). `fermatLastTheorem_of_vandiver_caseI` is the coarse form with Case I
 assumed directly. `p = 3` is closed unconditionally via Mathlib's `fermatLastTheoremThree`.
 
 ## Architecture: an axiom-free engine fed by per-prime certificates
@@ -154,6 +155,30 @@ dependency; see its file map.
 been removed from the release, but the comment is left in place — `CaseII95Core.lean` sits in
 the `p = 2124679` build closure, so editing it would force the multi-day recomputation. The
 design notes are not needed to build or audit anything.
+
+## Errata
+
+**`FltVandiver/Statement.lean`, line 168: the docstring of `fermatLastTheorem_of_vandiver_window`
+overstates the theorem.** The docstring presents the theorem as a reduction of Case I to three
+averaged statements about the window `𝒬_p(C·p²)` of primes `q ≤ C·p²` with `q ≡ 1 (mod 2p)` and
+`3 ∤ (q−1)/2p`, for one constant `C : ℕ` and every odd prime `p`: the window is nonempty (`hα`); the
+number of ordered pairs of nonzero `p`-th power residues summing to `1`, totaled over the window,
+is at most half the window's size (`hβA`); and on at most a quarter of the window `p` is a `p`-th
+power (`hβB`). That description is withdrawn. No `C : ℕ` satisfies the three hypotheses, so the
+implication is valid but vacuous:
+
+* `C = 0`: the window is empty, so `hα` fails.
+* `C = 1, 2, 3`: `hβA` fails at `p = 31`, `23`, `11` respectively. At `C = 1`, `p = 31` the window
+  is `{311, 683}`, and `683` alone contributes the three pairs `(2, 682)`, `(682, 2)`, `(342, 342)`.
+* `C ≥ 4`: `hβA` fails already at `p = 3`. The window contains `7`, `13`, `31`, and every member
+  from `31` on contributes at least two pairs, by the Hasse bound for the cubic `X³ + Y³ = Z³`.
+
+What survives is the per-prime pigeonhole `caseI_of_supply_of_cancellation`, which turns the three
+conditions at a fixed `p` into a passing auxiliary and is correct; the window theorem is that
+pigeonhole composed with `fermatLastTheorem_of_vandiver_caseI`, not a reduction to open problems.
+The crown theorem `fermatLastTheorem_of_vandiver_sgAux` above is unaffected. The docstring is not
+corrected in place because `Statement.lean` is part of the frozen, commit-pinned release; the
+companion paper links to it at that commit.
 
 ## Relation to other projects
 
