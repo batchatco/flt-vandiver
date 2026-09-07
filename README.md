@@ -228,8 +228,8 @@ lake build           # core library
 flt-stickelberger and flt-cyclotomic-nt dependencies. The per-prime certificates live in `flt-vandiver-primes`
 (`lake build FltPrimes` there re-runs every certificate: seconds for small `p`, a few
 minutes for the largest below `1000`; through the `afm-v2` evaluator `QiEvalFast` the `p = 16843` certificate re-verifies in
-seconds and the `p = 2124679` certificate in about twenty core-hours as sixteen parallel
-slices, see `flt-vandiver-primes` for measured figures; in `afm-v1` the same two runs took
+seconds and the `p = 2124679` certificate in 31 core-hours as sixteen parallel slices
+(118 minutes of wall time on 16 cores), see `flt-vandiver-primes` for measured figures; in `afm-v1` the same two runs took
 twenty single-threaded minutes and about 250 core-days). The engine is uniform in `p`: to certify a new prime,
 generate its witness pair `(ℓ, q)` (the smallest primes `≡ 1 (mod 2p)` passing each test)
 and add the corresponding `FLT<p>` files.
