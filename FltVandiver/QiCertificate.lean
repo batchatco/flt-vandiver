@@ -15,12 +15,16 @@ This file is **Piece 1** of the `Q_i` route to discharging `IsVandiverPrime p` f
 prime (target `p = 37`) by a finite, pure-`ZMod ℓ` computation — **no p-adic L / Iwasawa**.
 Source: Washington, *Introduction to Cyclotomic Fields*, §8.3 (Prop 8.18, Cor 8.19).
 
-`vandiverCert p ℓ t irr` is a `Bool` that `native_decide` evaluates instantly; for `p = 37` it
-fires at `(ℓ, t) = (149, 2)` with irregular index list `[32]`, so `IsVandiverPrime 37` holds
-*provided* the bridge lemma (Piece 2) is supplied.
+`vandiverCert p ℓ t idx` is a `Bool` that `native_decide` evaluates instantly. The argument `idx`
+is the list of indices `i` at which the test `Q_i^k ≠ 1` is run. The library always instantiates
+it at `evenIndices p`, every even `2 ≤ i ≤ p − 3`, and that is what the bridge consumes: the
+all-even certificate closes `p ∤ h⁺` through Washington Prop 8.18 and Thm 8.14 alone, with no use
+of Thm 8.16 or Cor 8.19 and no dependence on the irregular-index set. Running only over the
+irregular indices (Washington's own criterion, Cor 8.19) is a weaker use of the same `Bool`; the
+example below shows it at `p = 37`, `(ℓ, t) = (149, 2)`, irregular index `32`.
 
-**Piece 2** — the classical bridge `vandiverCert … = true → IsVandiverPrime p` (Washington
-8.14/8.16/8.18, a substantial but p-adic-L-free cyclotomic-unit/Gauss-sum argument on
+**Piece 2** — the classical bridge `vandiverCert p ℓ t (evenIndices p) = true → IsVandiverPrime p`
+(Washington 8.14/8.18, a substantial but p-adic-L-free cyclotomic-unit/Gauss-sum argument on
 `CyclotomicNT.RegularPrimes.IsVandiverPrime`) is **not** in this file; it is supplied by the
 `qiVandiverBridge` lemmas.
 
@@ -30,7 +34,7 @@ fires at `(ℓ, t) = (149, 2)` with irregular index list `[32]`, so `IsVandiverP
 * The prefactor exponent is `k·d/2 = (k*d)/2`, computed as **one** division of the full product
   (exact because `k = (ℓ−1)/p` is even). Do **not** write `k*(d/2)`: `d` is odd, so `d/2`
   truncates in `ℕ` and drops a factor.
-* The certifying condition is the **negation** `Q_i^k ≠ 1` for every irregular `i`. -/
+* The certifying condition is the **negation** `Q_i^k ≠ 1` for every listed `i`. -/
 
 namespace FltVandiver.QiCert
 
@@ -41,7 +45,17 @@ def dVal (p i : ℕ) : ℕ := ∑ a ∈ Finset.Icc 1 ((p - 1) / 2), a ^ (p - i)
 
 /-- `Q_i ∈ ZMod ℓ` (Washington Prop 8.18):
 `Q_i = t^{-(k·d)/2} · ∏_{b=1}^{(p-1)/2} (t^{k b} − 1)^{b^{p-1-i}}`, with `k = (ℓ−1)/p`.
-`Fact ℓ.Prime` makes `ZMod ℓ` a field, supplying `⁻¹` and `DecidableEq`. -/
+`Fact ℓ.Prime` makes `ZMod ℓ` a field, supplying `⁻¹` and `DecidableEq`.
+
+`Q_i` is **not** the image `Ē_i` of the eigen-unit `E_i` modulo the prime `𝔩` above `ℓ` at which
+`ζ ≡ μ := t^k`. With `d'_i = Σ_{a=1}^{(p-1)/2} a^{p-1-i}` the definitions give
+`Q_i / Ē_i = (t^{(ℓ-1)/2})^{d_i} · (μ − 1)^{d'_i}`: the `ζ`-prefactors of the `ξ_a` and the
+prefactor `t^{-k d_i/2}` combine to `(t^{(ℓ-1)/2})^{d_i}` times a power of `μ` with exponent
+divisible by `p`, and the denominators `ζ − 1` of the `ξ_a` supply `(μ − 1)^{d'_i}`. The first
+factor is `±1` (`t^{ℓ-1} = 1`) and dies under the `k`-th power because `k` is even; the second is
+a `p`-th power (`p ∣ d'_i`) and dies because `pk = ℓ − 1`. So `Ē_i^k = Q_i^k`, which is all the
+test consumes and what the bridge proves. Example: `p = 5, ℓ = 11, t = 2, i = 2` gives `Ē_2 = 4`,
+`Q_2 = 7`, common square `5`. -/
 def qi (p i ℓ t : ℕ) [Fact ℓ.Prime] : ZMod ℓ :=
   let k := (ℓ - 1) / p
   let half := (p - 1) / 2
@@ -49,8 +63,11 @@ def qi (p i ℓ t : ℕ) [Fact ℓ.Prime] : ZMod ℓ :=
     ∏ b ∈ Finset.Icc 1 half, ((t : ZMod ℓ) ^ (k * b) - 1) ^ (b ^ (p - 1 - i))
 
 /-- The certificate: `ℓ ≡ 1 (mod p)`, `t^k ≠ 1`, **`t` a unit mod `ℓ`** (`t^{ℓ-1}=1`), **`k` even**
-(`2 ∣ k`), and `Q_i^k ≠ 1` for every irregular index `i`.  When `true` (and `irr` is the list of
-irregular indices), Washington Cor 8.19 gives `p ∤ h⁺` — i.e. `IsVandiverPrime p` (via the bridge).
+(`2 ∣ k`), and `Q_i^k ≠ 1` for every index `i` in `irr`. The library runs it at
+`irr = evenIndices p` (every even `2 ≤ i ≤ p − 3`); when `true` there, Washington Prop 8.18 gives
+`E_i ∉ (E⁺)^p` for every even `i`, and Thm 8.14 gives `p ∤ h⁺`, i.e. `IsVandiverPrime p` (via the
+bridge, which uses neither Thm 8.16 nor Cor 8.19). At `irr` = the irregular indices the same
+`Bool` is Washington's Cor 8.19 criterion, which the library does not rely on.
 The `t^{ℓ-1}=1` and `2 ∣ k` clauses make `μ = t^k` a primitive `p`-th root and the `t^{-k d/2}`
 prefactor exact — exactly the validity conditions Prop 8.18 needs. -/
 def vandiverCert (p ℓ t : ℕ) [Fact ℓ.Prime] (irr : List ℕ) : Bool :=
