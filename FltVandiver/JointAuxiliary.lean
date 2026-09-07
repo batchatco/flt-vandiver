@@ -23,8 +23,6 @@ Added in `afm-v2`; first written 2026-09-06 as a read-only check against `afm-v1
 -/
 
 set_option linter.style.nativeDecide false
-set_option maxRecDepth 10000
-set_option maxHeartbeats 1600000
 
 namespace FltVandiver.JointAux
 
