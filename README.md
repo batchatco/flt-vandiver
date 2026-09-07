@@ -80,8 +80,8 @@ Each hypothesis alone is a recognized open problem; the point of the formalizati
 **the entire gap between Kummer-style methods and FLT is exhibited as these statements**.
 A variant `fermatLastTheorem_of_vandiver_window` (crown v3) replaces `haux` by three averaged
 statements about a window of candidate auxiliaries; its docstring calls those statements open
-problems, but no constant `C` satisfies them, so the theorem is valid and vacuous (see
-[Errata](#errata)). `fermatLastTheorem_of_vandiver_caseI` is the coarse form with Case I
+problems in `afm-v1`, but no constant `C` satisfies them, so the theorem is valid and vacuous
+(see [History](#history)). `fermatLastTheorem_of_vandiver_caseI` is the coarse form with Case I
 assumed directly. `p = 3` is closed unconditionally via Mathlib's `fermatLastTheoremThree`.
 
 ## Architecture: an axiom-free engine fed by per-prime certificates
@@ -163,22 +163,23 @@ Map of this repository:
 | `Descent92*.lean`, `CaseII95Core.lean`, `CaseII95Descent.lean`, `RouteA.lean` | Case II descent: the Washington §9.1 machinery and the Thm 9.5 small-witness route (Lemmas 9.6–9.9, the `ℓ ∣ ξ` invariant, and the certificate engines) |
 | `QiCertificate.lean`, `QiCertAppend.lean`, `QiBridge.lean`, `QiBridgeProof.lean`, `QiCertFast.lean` | the `Q_i` Vandiver certificate, slice assembly, and bridges |
 | `CertKernel.lean` | precompiled modular-exponentiation kernel used by the fast certificate form |
+| `QiEvalFast.lean`, `QiCertFast2.lean` | (`afm-v2`) the machine-speed evaluator of the all-even `Q_i` certificate, precompiled like `CertKernel`, and its bridge `vandiverCert_of_fast2` to `vandiverCert` on the standard axioms; every table fact the bridge relies on is re-verified inside the certificate |
 
 The analytic/number-theoretic foundations — Stickelberger → Herbrand, the cyclotomic unit
 index `[E:C]=h⁺`, eigenspace/real-subfield machinery, Bernoulli background, and class-group
 functoriality — were moved out of this repo and now live in the **`flt-cyclotomic-nt`**
 dependency; see its file map.
 
-**Note — a stale in-source reference.** `CaseII95Core.lean`'s module docstring points to
-`CASEII95_PLAN.md` (design notes / ledger) for the Case II §9.5 route; that planning file has
-been removed from the release, but the comment is left in place — `CaseII95Core.lean` sits in
-the `p = 2124679` build closure, so editing it would force the multi-day recomputation. The
-design notes are not needed to build or audit anything.
+**History.** In `afm-v1`, `CaseII95Core.lean`'s module docstring pointed to a planning file
+(`CASEII95_PLAN.md`) that was not part of the release; the reference was left in place because
+that module sits in the `p = 2124679` build closure, whose recomputation then took days. The
+machine-speed `Q_i` evaluator `QiEvalFast` (below) made the recomputation cheap, and the
+docstring was corrected in `afm-v2`.
 
-## Errata
+## History
 
-**`FltVandiver/Statement.lean`, line 168: the docstring of `fermatLastTheorem_of_vandiver_window`
-overstates the theorem.** The docstring presents the theorem as a reduction of Case I to three
+**`FltVandiver/Statement.lean`, line 168 of `afm-v1`: the docstring of `fermatLastTheorem_of_vandiver_window`
+overstated the theorem.** The `afm-v1` docstring presents the theorem as a reduction of Case I to three
 averaged statements about the window `𝒬_p(C·p²)` of primes `q ≤ C·p²` with `q ≡ 1 (mod 2p)` and
 `3 ∤ (q−1)/2p`, for one constant `C : ℕ` and every odd prime `p`: the window is nonempty (`hα`); the
 number of ordered pairs of nonzero `p`-th power residues summing to `1`, totaled over the window,
@@ -195,9 +196,9 @@ implication is valid but vacuous:
 What survives is the per-prime pigeonhole `caseI_of_supply_of_cancellation`, which turns the three
 conditions at a fixed `p` into a passing auxiliary and is correct; the window theorem is that
 pigeonhole composed with `fermatLastTheorem_of_vandiver_caseI`, not a reduction to open problems.
-The crown theorem `fermatLastTheorem_of_vandiver_sgAux` above is unaffected. The docstring is not
-corrected in place because `Statement.lean` is part of the frozen, commit-pinned release; the
-companion paper links to it at that commit.
+The crown theorem `fermatLastTheorem_of_vandiver_sgAux` above is unaffected. In `afm-v1` the docstring was not
+corrected in place, because `Statement.lean` was part of the frozen, commit-pinned release the
+companion paper links to; from `afm-v2` the docstring states the vacuity itself.
 
 ## Relation to other projects
 
@@ -226,9 +227,10 @@ lake build           # core library
 `lean-toolchain` pins the toolchain; `lakefile.toml` pins Mathlib, `flt-regular`, and the
 flt-stickelberger and flt-cyclotomic-nt dependencies. The per-prime certificates live in `flt-vandiver-primes`
 (`lake build FltPrimes` there re-runs every certificate: seconds for small `p`, a few
-minutes for the largest below `1000`; the `p = 16843` certificates re-verify in about
-20 single-threaded minutes, and the `p = 2124679` certificates in roughly 8 days on a
-64-vCPU machine — its rebuild is optional, exercising no new certificate path). The engine is uniform in `p`: to certify a new prime,
+minutes for the largest below `1000`; through the `afm-v2` evaluator `QiEvalFast` the `p = 16843` certificate re-verifies in
+seconds and the `p = 2124679` certificate in about twenty core-hours as sixteen parallel
+slices, see `flt-vandiver-primes` for measured figures; in `afm-v1` the same two runs took
+twenty single-threaded minutes and about 250 core-days). The engine is uniform in `p`: to certify a new prime,
 generate its witness pair `(ℓ, q)` (the smallest primes `≡ 1 (mod 2p)` passing each test)
 and add the corresponding `FLT<p>` files.
 
