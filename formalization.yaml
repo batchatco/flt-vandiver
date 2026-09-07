@@ -69,7 +69,7 @@ status:
   # Axiom note (verified via #print axioms): native_decide generates one DISTINCT, named axiom per
   # certificate, of the form <declaration>._native.native_decide.ax_* -- not a shared Lean.ofReduceBool.
   # So #print axioms reports the three standard axioms plus one per certificate: 2 for a typical
-  # sub-1000 prime, 5 at 16843 (4 Q_i slices + SG), 65 at 2124679 (64 slices + SG). These appear only
+  # sub-1000 prime, 2 at 16843 (one Q_i certificate + SG), 17 at 2124679 (16 slices + SG). These appear only
   # in flt-vandiver-primes; every other library uses the three standard axioms alone.
   axioms:                         # standard base shared by the whole family
     - "propext"
@@ -82,13 +82,13 @@ status:
       file: "FltPrimes/FLT2124679.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      native_decide_certificates: 65   # 64 Q_i slices + SG; each a distinct ..._native.native_decide.ax_* axiom
+      native_decide_certificates: 17   # 16 Q_i slices + SG; each a distinct ..._native.native_decide.ax_* axiom
     - declaration: "FltVandiver.fermatLastTheoremFor_16843"
       repository: "flt-vandiver-primes"
       file: "FltPrimes/FLT16843.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      native_decide_certificates: 5    # 4 Q_i slices + SG
+      native_decide_certificates: 2    # one Q_i certificate + SG
     - declaration: "FLT37.fermatLastTheoremFor_37"
       repository: "flt-vandiver-primes-kernel"
       file: "FLT37.lean"
