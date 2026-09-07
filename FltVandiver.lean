@@ -54,4 +54,7 @@ import FltVandiver.UnramifiedRouteA
 import FltVandiver.CaseII95Core
 import FltVandiver.CaseII95Descent
 import FltVandiver.Statement
+import FltVandiver.QiCertFast2
+import FltVandiver.JointAuxiliary
+import FltVandiver.BadCertificate
 open CyclotomicNT
