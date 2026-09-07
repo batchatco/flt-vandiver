@@ -1,6 +1,6 @@
 # flt-vandiver
 
-**Machine-checked Fermat's Last Theorem for every prime exponent `17 ≤ p < 1000` (regular and irregular) — no modularity, no Wiles.**
+**Machine-checked Fermat's Last Theorem for every prime exponent `17 ≤ p < 1000` (regular and irregular), by the classical cyclotomic route, with no modularity input.**
 
 A Lean 4 project, built on [flt-regular](https://github.com/leanprover-community/flt-regular)
 and [Mathlib](https://github.com/leanprover-community/mathlib4), that proves FLT by classical
@@ -29,6 +29,25 @@ same auxiliary pair `(ℓ, t) = (709, 2)` that proves Vandiver:
 ```lean
 theorem fermatLastTheoremFor_59 : FermatLastTheoremFor 59   -- FltPrimes/FLT59.lean
 ```
+
+## Quick start: clone the six libraries as siblings
+
+The `lakefile.toml` here refers to sibling checkouts (`path = "../flt-stickelberger"`, `path = "../flt-cyclotomic-nt"`),
+so cloning this repository alone and running `lake build` fails. Clone all six at the `afm-v1` tag into one directory:
+
+```sh
+for r in flt-stickelberger flt-cyclotomic-nt flt-vandiver flt-vandiver-primes \
+         flt-vandiver-primes-kernel flt-regular-extended; do
+  git clone --branch afm-v1 https://github.com/batchatco/$r
+done
+cd flt-vandiver           && lake exe cache get && lake build                    # the engine
+cd ../flt-vandiver-primes && lake exe cache get && lake build FltPrimes.FLT59    # one certified prime
+```
+
+`lake build FltPrimes.FLT59` re-runs the two `native_decide` certificates for `p = 59` (seconds) on top of the
+engine; `lake build FltPrimes` re-runs every prime below `1000` (minutes). Independent-kernel comparators for
+`p = 37` and `p = 107` (`Challenge.lean`, Mathlib-only statements) live in `flt-vandiver-primes-kernel` and
+`flt-regular-extended`. See [Building](#building) for the larger exponents.
 
 ## The crown theorems: FLT without Wiles, as named open problems
 
@@ -185,14 +204,19 @@ companion paper links to it at that commit.
 * [**flt-regular**](https://github.com/leanprover-community/flt-regular) — this project's
   foundation; proves FLT for regular primes. flt-vandiver weakens regularity to Vandiver
   and recovers the regular case as a corollary (every regular prime is a Vandiver prime).
-* [**The FLT project**](https://github.com/ImperialCollegeLondon/FLT) (Buzzard et al.) —
-  formalizes the modular route (Wiles/Taylor–Wiles). Complementary, not competing: that
-  project will eventually prove `FermatLastTheorem` unconditionally; this one shows exactly
-  how far the *pre-modular* methods reach, and at which statements they stop.
+* [**Formalizing Fermat's Last Theorem**](https://github.com/anthropics/fermats-last-theorem) (Peng et al.,
+  Anthropic, 2026) — a complete Lean formalization of the modular route (Frey, Serre, Ribet, Wiles,
+  Taylor–Wiles), settling every exponent at once. It shares Mathlib and `flt-regular` with this project and
+  no mathematics above them. This project is not a competitor on range: it shows how far the
+  *pre-modular* methods reach, one exponent at a time, and at which two named statements they stop.
+* [**The FLT project**](https://github.com/ImperialCollegeLondon/FLT) (Buzzard et al.) — an independent,
+  ongoing formalization of the modular route.
 * **Mathlib** — the class-group functoriality, Stickelberger, and Bernoulli infrastructure
   here could be upstreamed to Mathlib, where they would outlive the certificates that motivate them.
 
 ## Building
+
+Clone the sibling libraries first ([Quick start](#quick-start-clone-the-six-libraries-as-siblings)), then in this directory:
 
 ```sh
 lake exe cache get   # fetch Mathlib cache
