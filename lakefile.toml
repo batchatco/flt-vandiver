@@ -33,6 +33,13 @@ name = "CertKernel"
 globs = ["CertKernel"]
 precompileModules = true
 
+# Machine-speed evaluator for the all-even Q_i certificate (see FltVandiver/QiCertFast2 for
+# the soundness bridge to vandiverCert). Precompiled so native_decide runs compiled loops.
+[[lean_lib]]
+name = "QiEvalFast"
+globs = ["QiEvalFast"]
+precompileModules = true
+
 [[lean_lib]]
 name = "FltVandiver"
 globs = ["FltVandiver"]
