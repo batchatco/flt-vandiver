@@ -84,7 +84,12 @@ variable [NumberField.IsCMField (CyclotomicField p ℚ)]
 
 /-- **The §9.1 situation** (Washington 1997, p. 168): real `ω, θ, ξ` and a real unit `η`
 with `ω^p + θ^p = η·λ^m·ξ^p`, pairwise coprime and prime to `λ`, with the invariant
-`m ≥ p(p−1)/2`.  The descent measure is the number of distinct prime factors of `ξ`. -/
+`m ≥ p(p−1)/2`.  The descent measure is the number of distinct prime factors of `ξ`.
+
+Two `λ`s. In the level equation `λ` is Washington's §9.1 element `λ = (1−ζ)(1−ζ⁻¹)`, here
+`lambda0 hζ`, an associate of `(1−ζ)²`. The three "prime to `λ`" conditions are stated with
+`1 − ζ` (`hζ.toInteger`), which is equivalent since `(1−ζ)` and `lambda0` generate the same
+prime ideal up to the square. -/
 structure Situation92 {ζ : CyclotomicField p ℚ} (hζ : IsPrimitiveRoot ζ p) where
   /-- The first real base element (entry: `x`). -/
   ω : 𝓞 (CyclotomicField p ℚ)
@@ -110,7 +115,7 @@ structure Situation92 {ζ : CyclotomicField p ℚ} (hζ : IsPrimitiveRoot ζ p) 
   hη_real : ringOfIntegersComplexConj (CyclotomicField p ℚ)
       ((η : (𝓞 (CyclotomicField p ℚ))ˣ) : 𝓞 (CyclotomicField p ℚ))
     = ((η : (𝓞 (CyclotomicField p ℚ))ˣ) : 𝓞 (CyclotomicField p ℚ))
-  /-- The level equation `ω^p + θ^p = η·λ^m·ξ^p`. -/
+  /-- The level equation `ω^p + θ^p = η·λ^m·ξ^p`, with `λ = lambda0 hζ = (1−ζ)(1−ζ⁻¹)`. -/
   heq : ω ^ p + θ ^ p
     = ((η : (𝓞 (CyclotomicField p ℚ))ˣ) : 𝓞 (CyclotomicField p ℚ))
       * (lambda0 hζ) ^ m * ξ ^ p
@@ -120,11 +125,11 @@ structure Situation92 {ζ : CyclotomicField p ℚ} (hζ : IsPrimitiveRoot ζ p) 
   hωξ : IsCoprime (Ideal.span {ω}) (Ideal.span {ξ})
   /-- `θ`, `ξ` coprime (as ideals). -/
   hθξ : IsCoprime (Ideal.span {θ}) (Ideal.span {ξ})
-  /-- `ω` is prime to `λ` (equivalently to `1 − ζ`). -/
+  /-- `ω` is prime to `1 − ζ` (equivalently to `λ = lambda0 hζ`, an associate of `(1−ζ)²`). -/
   hlamω : ¬ (1 - hζ.toInteger) ∣ ω
-  /-- `θ` is prime to `λ`. -/
+  /-- `θ` is prime to `1 − ζ` (equivalently to `λ`). -/
   hlamθ : ¬ (1 - hζ.toInteger) ∣ θ
-  /-- `ξ` is prime to `λ`. -/
+  /-- `ξ` is prime to `1 − ζ` (equivalently to `λ`). -/
   hlamξ : ¬ (1 - hζ.toInteger) ∣ ξ
   /-- Nontriviality. -/
   hξ0 : ξ ≠ 0
