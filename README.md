@@ -33,12 +33,12 @@ theorem fermatLastTheoremFor_59 : FermatLastTheoremFor 59   -- FltPrimes/FLT59.l
 ## Quick start: clone the six libraries as siblings
 
 The `lakefile.toml` here refers to sibling checkouts (`path = "../flt-stickelberger"`, `path = "../flt-cyclotomic-nt"`),
-so cloning this repository alone and running `lake build` fails. Clone all six at the `afm-v1` tag into one directory:
+so cloning this repository alone and running `lake build` fails. Clone all six at the `afm-v2` tag into one directory:
 
 ```sh
 for r in flt-stickelberger flt-cyclotomic-nt flt-vandiver flt-vandiver-primes \
          flt-vandiver-primes-kernel flt-regular-extended; do
-  git clone --branch afm-v1 https://github.com/batchatco/$r
+  git clone --branch afm-v2 https://github.com/batchatco/$r
 done
 cd flt-vandiver           && lake exe cache get && lake build                    # the engine
 cd ../flt-vandiver-primes && lake exe cache get && lake build FltPrimes.FLT59    # one certified prime
@@ -150,7 +150,7 @@ The development is split across small repositories so the core library builds fa
 | **flt-cyclotomic-nt** | analytic/algebraic NT foundations (Dedekind zeta factorization, generalized Bernoulli, L-values; sorry-free; builds on Mathlib, flt-stickelberger, flt-regular) |
 | **flt-stickelberger** | our standalone, independent clean-room formalization of Stickelberger's theorem (Gauss-sum factorization + integral Stickelberger relation, following Washington Ch. 6; Mathlib-only, sorry-free) |
 
-Release tag **`afm-v1`** across all six; GitHub topic
+Release tag **`afm-v2`** across all six; GitHub topic
 [`flt-vandiver`](https://github.com/batchatco?tab=repositories&q=topic:flt-vandiver); each ships
 an `AxiomAudit.lean`. Companion paper in preparation.
 
