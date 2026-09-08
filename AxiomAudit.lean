@@ -22,3 +22,5 @@ Expected axiom base: [propext, Classical.choice, Quot.sound]
 #print axioms FltVandiver.BadCert.fermatLastTheorem_of_bad_supply
 #print axioms FltVandiver.BadCert.noBad_of_two_mul_le
 #print axioms FltVandiver.BadCert.fermatLastTheoremFor_of_size_cert
+#print axioms FltVandiver.QiCert.qi_pow_eq_one_iff_of_base
+#print axioms FltVandiver.QiCert.vandiverCert_evenIndices_of_base

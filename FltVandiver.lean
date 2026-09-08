@@ -57,4 +57,5 @@ import FltVandiver.Statement
 import FltVandiver.QiCertFast2
 import FltVandiver.JointAuxiliary
 import FltVandiver.BadCertificate
+import FltVandiver.QiBaseIndep
 open CyclotomicNT
