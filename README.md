@@ -46,10 +46,10 @@ cd ../flt-vandiver-primes && lake exe cache get && lake build FltPrimes.FLT59   
 
 `lake build FltPrimes.FLT59` re-runs the two `native_decide` certificates for `p = 59` (seconds) on top of the
 engine; `lake build FltPrimes` re-runs every prime below `1000` (minutes). Independent-kernel comparators for
-`p = 37` and `p = 107` (`Challenge.lean`, Mathlib-only statements) live in `flt-vandiver-primes-kernel` and
+`p = 59` and `p = 107` (`Challenge.lean`, Mathlib-only statements) live in `flt-vandiver-primes-kernel` and
 `flt-regular-extended`. See [Building](#building) for the larger exponents.
 
-## The crown theorems: FLT without Wiles, as named open problems
+## The crown theorems: FLT by the cyclotomic route, reduced to two named open problems
 
 (`FltVandiver/Statement.lean`.) The main reduction:
 
@@ -67,7 +67,7 @@ honest species:
 * **`hswcert` — the effective small-witness Vandiver certificate, uniformly in `p`**
   (Washington Thm 9.5's hypothesis): an auxiliary pair `(ℓ, t)`, `ℓ ≡ 1 (mod p)` prime
   with `ℓ < p² − p`, whose `Q_i` cyclotomic-unit test fires at every even index. This is
-  Vandiver's conjecture (`p ∤ h⁺`, a congruence-anomaly statement open since the 1840s)
+  Vandiver's conjecture (`p ∤ h⁺`, a congruence-anomaly statement going back to Kummer and Vandiver)
   in effective, per-prime-checkable form; the same data powers the entire Case II descent.
   Verified numerically far beyond any exponent of interest; heuristically *expected* to
   have exceptions (Washington's `½ log log x` count) yet none has ever been found.
