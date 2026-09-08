@@ -12,9 +12,40 @@
   \lean{FltVandiver.QiCert.vandiverCertFast}
   \leanok
   \uses{def:vcert}
-  A pure-\code{Nat} reformulation \code{vandiverCertFast} of the certificate, split
-  into slices, that \code{native\_decide} can evaluate even at $p = 2124679$.
+  A pure-\code{Nat} reformulation \code{vandiverCertFast} of the certificate, with
+  exponents reduced modulo $\ell - 1$, that \code{native\_decide} evaluates for every
+  prime below $1000$.
 \end{definition}
+
+\begin{definition}[Machine-speed certificate]\label{def:fast2cert}
+  \lean{FltVandiver.QiCert.Fast2.fast2Cert}
+  \leanok
+  \uses{def:vcert}
+  The evaluator \code{fast2Cert} of the all-even test by discrete-logarithm sums:
+  $Q_i^{\,k} = h^{\,S_i - N d_i}$ with $h = t^k$ of order $p$, so an index costs
+  $p/2$ multiplications modulo $p$ once $O(p)$ tables are built. Every table fact it
+  uses is re-verified inside the Boolean. Precompiled; it carries the two
+  Wolstenholme primes ($16843$ in seconds, $2124679$ in $31$ core-hours).
+\end{definition}
+
+\begin{theorem}[Machine-speed certificate $\Rightarrow$ certificate]\label{thm:fast2bridge}
+  \lean{FltVandiver.QiCert.Fast2.vandiverCert_of_fast2}
+  \leanok
+  \uses{def:fast2cert, def:vcert}
+  If \code{fast2Cert}~$p\,\ell\,t\,\mathit{idx}$ holds then so does
+  \code{vandiverCert}~$p\,\ell\,t\,\mathit{idx}$: the two evaluators agree on what they
+  certify, on the three standard axioms.
+\end{theorem}
+
+\begin{theorem}[Base independence of the $Q_i$ test]\label{thm:baseindep}
+  \lean{FltVandiver.QiCert.qi_pow_eq_one_iff_of_base}
+  \leanok
+  \uses{def:vcert}
+  For two valid bases $t, t'$ and an even index $i < p$, $Q_i(t)^k = 1$ if and only if
+  $Q_i(t')^k = 1$: the verdict of the test depends on $(p, \ell)$ alone, so a passing
+  certificate at every even index passes for every valid base
+  (\code{vandiverCert\_evenIndices\_of\_base}). A witness is the prime $\ell$.
+\end{theorem}
 
 \begin{definition}[Unit index {$[E:C]=\hplus$} (external)]\label{ext:unitindex}
   \leanok

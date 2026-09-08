@@ -26,3 +26,33 @@
   Germain auxiliary, then Fermat's Last Theorem holds --- with no modularity input.
   This is the paper's headline reduction; both hypotheses are classically open.
 \end{theorem}
+
+\begin{theorem}[Widened budget]\label{thm:sizecert}
+  \lean{FltVandiver.BadCert.fermatLastTheoremFor_of_size_cert}
+  \leanok
+  \uses{thm:certs95, def:vcert, def:sgcert}
+  The discharged form with the budget $\ell < p^2 - p$ replaced by
+  $2\ell \le 3p^2 - 5p + 2$ and $p \nmid (\ell-1)/p$, with no other change: the bad set
+  of Washington's Lemma~9.7 is proved empty in that range
+  (\code{noBad\_of\_two\_mul\_le}). Case~I runs on a separate Sophie Germain prime.
+\end{theorem}
+
+\begin{theorem}[Bad-set certificate]\label{thm:badcert}
+  \lean{FltVandiver.BadCert.fermatLastTheoremFor_of_bad_cert}
+  \leanok
+  \uses{thm:nosituation, def:vcert, def:sgcert}
+  Case~II with no size bound on $\ell$: the $Q_i$ certificate, $p \nmid (\ell-1)/p$, and
+  the computable emptiness certificate \code{noBadCert} for the bad set of Lemma~9.7,
+  together with a Sophie Germain prime for Case~I, give
+  \code{FermatLastTheoremFor}~$p$.
+\end{theorem}
+
+\begin{theorem}[Joint auxiliary]\label{thm:jointcert}
+  \lean{FltVandiver.JointAux.fermatLastTheoremFor_of_joint_cert}
+  \leanok
+  \uses{thm:nosituation, def:vcert, def:sgcert, thm:caseIsg}
+  One prime $\ell$ carrying both certificates, the all-even $Q_i$ test and the Sophie
+  Germain conditions, with $p \nmid (\ell-1)/p$ and no upper bound on $\ell$, gives
+  \code{FermatLastTheoremFor}~$p$: Legendre's condition (A) supplies the seed
+  divisibility $\ell \mid z$ that the size bound used to buy.
+\end{theorem}
