@@ -164,6 +164,7 @@ Map of this repository:
 | `QiCertificate.lean`, `QiCertAppend.lean`, `QiBridge.lean`, `QiBridgeProof.lean`, `QiCertFast.lean` | the `Q_i` Vandiver certificate, slice assembly, and bridges |
 | `CertKernel.lean` | precompiled modular-exponentiation kernel used by the fast certificate form |
 | `QiEvalFast.lean`, `QiCertFast2.lean` | (`afm-v2`) the machine-speed evaluator of the all-even `Q_i` certificate, precompiled like `CertKernel`, and its bridge `vandiverCert_of_fast2` to `vandiverCert` on the standard axioms; every table fact the bridge relies on is re-verified inside the certificate |
+| `QiBaseIndep.lean` | (`afm-v2`) base independence: the `Q_i` verdict at an even index is the same for every valid base `t` (`qi_pow_eq_one_iff_of_base`, `vandiverCert_evenIndices_of_base`), so a witness is the prime `ℓ` alone |
 
 The analytic/number-theoretic foundations — Stickelberger → Herbrand, the cyclotomic unit
 index `[E:C]=h⁺`, eigenspace/real-subfield machinery, Bernoulli background, and class-group
