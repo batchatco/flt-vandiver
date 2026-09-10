@@ -348,8 +348,9 @@ Two performance traps (both `O(q)`) for certificate authors:
 /-- Subgroup-form Legendre certificate: `sub` (a list, unrelated to the Vandiver witness prime
 `ℓ`) lists `n = (q−1)/p` distinct `n`-th roots of unity (hence *all* of them, hence exactly the
 nonzero `p`-th power residues); no three of them sum to `0` (condition (A)); and `p` is neither
-`0` nor in the list (condition (B)). Unlike `sgCert`, verification never enumerates `ZMod q` — the quantifier clauses
-are `List.all` folds precisely to dodge the `Fintype` decidable-forall instance. -/
+`0` nor in the list (condition (B)). Unlike `sgCert`, verification never enumerates `ZMod q`:
+the quantifier clauses are `List.all` folds precisely to dodge the `Fintype`
+decidable-forall instance, which also makes this form cheap enough for kernel `decide`. -/
 def sgCertSub (p q n : ℕ) [NeZero q] (sub : List (ZMod q)) : Bool :=
   decide (q - 1 = n * p) &&
   decide (sub.length = n) &&
