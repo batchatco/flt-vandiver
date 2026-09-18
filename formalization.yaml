@@ -11,7 +11,7 @@ project:
   authors:                        # [required] who did the formalization
     - "Bradley Arthur Taylor"
   license: "Apache-2.0"           # [required]
-  # the six sibling libraries this descriptor covers (clone as siblings; release tag afm-v1):
+  # the six sibling libraries this descriptor covers (clone as siblings; release tag afm-v2):
   repositories:
     - name: "flt-vandiver"              # engine: Case I/II descent, Washington Thm 9.5, certificate bridges
     - name: "flt-vandiver-primes"       # native_decide instances: every prime 17<=p<1000, plus 16843 and 2124679
@@ -119,4 +119,4 @@ review:
 # alignment - how source statements map to formal declarations.
 alignment:
   paper: "Lean 4 Formalization of Fermat's Last Theorem for Every Prime Exponent Below 1000, Regular and Irregular, and Two Wolstenholme Primes (2026)"
-  blueprint: "https://github.com/batchatco/flt-vandiver/tree/afm-v1/blueprint"   # per-repo blueprints; rendered site published via CI at go-public
+  blueprint: "https://batchatco.github.io/flt-vandiver/blueprint/"   # rendered per-repo blueprints (source: blueprint/ in each repo at afm-v2)
