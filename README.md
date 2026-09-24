@@ -8,6 +8,8 @@ and [Mathlib](https://github.com/leanprover-community/mathlib4), that proves FLT
 regularity hypothesis fails — and reduces full FLT, with no modularity input, to a short list
 of named open problems, machine-checked, with nothing hidden in prose.
 
+Companion paper: [doi:10.5281/zenodo.22901028](https://doi.org/10.5281/zenodo.22901028) (preprint).
+
 Per-prime theorems `fermatLastTheoremFor_<p>` exist for **every prime `17 ≤ p < 1000`** (162 primes —
 64 irregular, `37, 59, 67, …, 971`, and 98 regular) **and for both known Wolstenholme primes, `p = 16843` and
 `p = 2124679`** — each resting on the standard axioms plus two `native_decide`
@@ -152,7 +154,9 @@ The development is split across small repositories so the core library builds fa
 
 Release tag **`afm-v2`** across all six; GitHub topic
 [`flt-vandiver`](https://github.com/batchatco?tab=repositories&q=topic:flt-vandiver); each ships
-an `AxiomAudit.lean`. Companion paper in preparation.
+an `AxiomAudit.lean`. Companion paper (preprint, 31 pp., CC BY 4.0): Bradley Arthur Taylor,
+*The Cyclotomic Route to Fermat's Last Theorem, Formalized Past the Regular Case*, Zenodo, 2026,
+[doi:10.5281/zenodo.22901028](https://doi.org/10.5281/zenodo.22901028).
 
 Map of this repository:
 
